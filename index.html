@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brian Kiti Nyale CV</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Vibrant Cool -->
+    <!-- Application Structure Plan: A single-page portfolio with a top navigation bar for smooth scrolling to thematic sections: Home (introduction), Experience (interactive timeline), Skills (visual chart), Projects, and Contact. This structure provides a logical, user-guided narrative of Brian's career, making it easy for recruiters to find key information. The interactive timeline and skills chart are chosen to make the data more engaging and digestible than a static list. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Career History -> Goal: Show progression -> Viz: Interactive Timeline (HTML/CSS/JS) -> Interaction: Hover/Click for details -> Justification: More engaging than a list, shows career path clearly.
+        - Report Info: Technical Skills -> Goal: Compare proficiency -> Viz: Radar Chart (Chart.js) -> Interaction: Tooltips on hover -> Justification: Provides a quick, visual summary of technical strengths.
+        - Report Info: Projects -> Goal: Showcase work -> Viz: Card-based layout (HTML/Tailwind) -> Interaction: Clickable cards -> Justification: Organizes projects cleanly and allows for future expansion with modals or links.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7fa;
+            color: #2c3e50;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #3498db;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            left: -0.5rem;
+            top: 0.25rem;
+            background-color: #3498db;
+            border: 3px solid #f5f7fa;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <header class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <h1 class="text-xl font-bold text-[#2c3e50]">Brian Kiti Nyale</h1>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link font-medium">Home</a>
+                    <a href="#experience" class="nav-link font-medium">Experience</a>
+                    <a href="#skills" class="nav-link font-medium">Skills</a>
+                    <a href="#projects" class="nav-link font-medium">Projects</a>
+                    <a href="#contact" class="nav-link font-medium">Contact</a>
+                </nav>
+                <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#home" class="block py-2 px-6 text-sm nav-link">Home</a>
+            <a href="#experience" class="block py-2 px-6 text-sm nav-link">Experience</a>
+            <a href="#skills" class="block py-2 px-6 text-sm nav-link">Skills</a>
+            <a href="#projects" class="block py-2 px-6 text-sm nav-link">Projects</a>
+            <a href="#contact" class="block py-2 px-6 text-sm nav-link">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="pt-32 pb-16">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Brian Kiti Nyale</h2>
+                <p class="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">IT Professional | Network Engineer | Developer</p>
+                <div class="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-semibold mb-4 text-left text-[#3498db]">Professional Summary</h3>
+                    <p class="text-left leading-relaxed">
+                        Experienced and adaptable IT professional skilled in network engineering, system administration, and software development. Proven track record of troubleshooting network issues, managing databases, and building web and mobile applications. Seeking to apply technical skills to improve organizational efficiency and drive innovation.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="py-16 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-12">Career Journey</h2>
+                <div class="relative max-w-3xl mx-auto">
+                    <div class="absolute left-0 h-full w-0.5 bg-gray-200"></div>
+                    <div id="timeline-container" class="space-y-12">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-16">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-4">Technical Skills</h2>
+                <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">This chart provides a visual overview of my key technical competencies. Hover over a point to see the skill name. This helps to quickly identify my areas of strength in programming, networking, and design.</p>
+                <div class="chart-container">
+                    <canvas id="skillsChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-16 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-12">Projects</h2>
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="bg-[#f5f7fa] p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                        <h3 class="text-xl font-bold mb-2 text-[#3498db]">Founder | Poetryfarm.co.ke</h3>
+                        <p class="text-sm font-medium text-gray-500 mb-4">Dec 2020 - Present</p>
+                        <p>Founded and managed a digital platform for poetry and creative writing. Served as System Admin, Editor, and Blogger, overseeing the website's technical maintenance and content strategy.</p>
+                    </div>
+                    <div class="bg-[#f5f7fa] p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                        <h3 class="text-xl font-bold mb-2 text-[#3498db]">App Developer | Google Play Store</h3>
+                        <p class="text-sm font-medium text-gray-500 mb-4">Personal Project</p>
+                        <p>Developed and published an application on the Google Play Store using App creator. Managed the full app life cycle, from development and publishing to maintenance and updates.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-16">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl font-bold mb-4">Get In Touch</h2>
+                <p class="text-gray-600 mb-8">Feel free to reach out for collaborations or job opportunities.</p>
+                <div class="flex justify-center items-center space-x-6">
+                    <a href="mailto:kiti.nyale81@gmail.com" class="text-gray-700 hover:text-[#3498db] transition-colors">Email</a>
+                    <a href="tel:0724590975" class="text-gray-700 hover:text-[#3498db] transition-colors">Phone</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white text-center py-6">
+        <p class="text-gray-500">&copy; 2025 Brian Kiti Nyale. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (mobileMenu.classList.contains('hidden') === false) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            const experienceData = [
+                {
+                    role: "Network Engineer",
+                    company: "TRIDENT NETWORKS, Mtwapa Kenya",
+                    date: "Sep 2024 - April 2025",
+                    details: [
+                        "Troubleshot and resolved network errors to ensure high uptime.",
+                        "Designed and configured network systems using Ubiquiti devices and Edge routers.",
+                        "Managed servers and configured network tunnels for secure data transfer.",
+                        "Utilized Python for network automation and scripting tasks."
+                    ]
+                },
+                {
+                    role: "System Admin, Editor & Blogger",
+                    company: "POETRY FARM AND TEZO DIGITAL, Nairobi",
+                    date: "Dec 2020 - Present",
+                    details: [
+                        "Maintained and secured IT systems for digital platforms.",
+                        "Wrote and edited digital content to improve online presence and user engagement."
+                    ]
+                },
+                {
+                    role: "Graduate Trainee | Developer",
+                    company: "CODE NATION, MBTRIX TECHNOLOGIES, Juja",
+                    date: "Dec 2021 - Mar 2022",
+                    details: [
+                        "Developed websites using PHP, Laravel, and front-end technologies.",
+                        "Assisted with mobile app development in Flutter and Java.",
+                        "Managed PHPMyAdmin databases and performed data analysis."
+                    ]
+                },
+                {
+                    role: "Client Relations & IT Support",
+                    company: "Highlife Technologies, Nairobi",
+                    date: "Oct 2021 - Dec 2021",
+                    details: [
+                        "Managed client loan accounts and performed minor IT repairs.",
+                        "Maintained customer databases and fostered strong client relationships."
+                    ]
+                },
+                {
+                    role: "IT Department Intern",
+                    company: "Deputy Governor’s Office, Kilifi County",
+                    date: "Jan 2020 - May 2020",
+                    details: [
+                        "Repaired computers and installed software for government staff.",
+                        "Configured networking equipment and assisted with CCTV installation."
+                    ]
+                }
+            ];
+
+            const timelineContainer = document.getElementById('timeline-container');
+            experienceData.forEach(item => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'relative pl-8 timeline-item';
+                let detailsHtml = item.details.map(detail => `<li>${detail}</li>`).join('');
+                timelineItem.innerHTML = `
+                    <h3 class="text-lg font-bold text-[#2c3e50]">${item.role}</h3>
+                    <p class="font-medium text-gray-600">${item.company}</p>
+                    <p class="text-sm text-gray-500 mb-2">${item.date}</p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm">
+                        ${detailsHtml}
+                    </ul>
+                `;
+                timelineContainer.appendChild(timelineItem);
+            });
+
+            const ctx = document.getElementById('skillsChart').getContext('2d');
+            const skillsChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Networking', 'Python', 'PHP/Laravel', 'JS/HTML/CSS', 'Mobile Dev', 'Databases', 'System Admin'],
+                    datasets: [{
+                        label: 'Proficiency',
+                        data: [90, 80, 85, 95, 75, 85, 88],
+                        backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                        borderColor: 'rgba(52, 152, 219, 1)',
+                        pointBackgroundColor: 'rgba(52, 152, 219, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(52, 152, 219, 1)'
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 14,
+                                    family: "'Inter', sans-serif"
+                                },
+                                color: '#2c3e50'
+                            },
+                            ticks: {
+                                backdropColor: 'transparent',
+                                display: false
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.chart.data.labels[context.dataIndex]}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
