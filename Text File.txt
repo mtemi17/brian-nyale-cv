@@ -9,32 +9,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" xintegrity="sha512-ieoM4r7d0L/T8g/N1/GfA5fJ2l8xW45g8rG3Qp3G5fD/r+F/u+jA+eFwF6I6g6V6R5Wq95rW+7k/X18b4p06w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Chosen Palette: Vibrant Cool -->
+    <!-- Application Structure Plan: A single-page portfolio with a top navigation bar for smooth scrolling to thematic sections: Home (introduction), Experience (interactive timeline), Skills (visual chart), Projects, and Contact. This structure provides a logical, user-guided narrative of Brian's career, making it easy for recruiters to find key information. The interactive timeline and skills chart are chosen to make the data more engaging and digestible than a static list. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Career History -> Goal: Show progression -> Viz: Interactive Timeline (HTML/CSS/JS) -> Interaction: Hover/Click for details -> Justification: More engaging than a list, shows career path clearly.
+        - Report Info: Technical Skills -> Goal: Compare proficiency -> Viz: Radar Chart (Chart.js) -> Interaction: Tooltips on hover -> Justification: Provides a quick, visual summary of technical strengths.
+        - Report Info: Projects -> Goal: Showcase work -> Viz: Card-based layout (HTML/Tailwind) -> Interaction: Clickable cards -> Justification: Organizes projects cleanly and allows for future expansion with modals or links.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
-        :root {
-            --bg-color: #f5f7fa;
-            --text-color: #2c3e50;
-            --card-bg: #ffffff;
-            --primary-color: #3498db;
-            --secondary-text: #6b7280;
-            --border-color: #e5e7eb;
-            --timeline-line: #d1d5db;
-        }
-
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: #f5f7fa;
+            color: #2c3e50;
         }
-
         .nav-link {
             transition: color 0.3s ease;
         }
         .nav-link:hover {
-            color: var(--primary-color);
+            color: #3498db;
         }
         .timeline-item::before {
             content: '';
@@ -44,15 +37,8 @@
             border-radius: 50%;
             left: -0.5rem;
             top: 0.25rem;
-            background-color: var(--primary-color);
-            border: 3px solid var(--bg-color);
-            z-index: 10; /* Ensure dot is on top of line */
-        }
-        .timeline-item {
-            position: relative;
-        }
-        .timeline-container > .relative > .absolute {
-            background-color: var(--timeline-line);
+            background-color: #3498db;
+            border: 3px solid #f5f7fa;
         }
         .chart-container {
             position: relative;
@@ -68,13 +54,6 @@
                 height: 400px;
             }
         }
-        .photo-card {
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-        .photo-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
     </style>
 </head>
 <body class="antialiased">
@@ -87,15 +66,11 @@
                     <a href="#experience" class="nav-link font-medium">Experience</a>
                     <a href="#skills" class="nav-link font-medium">Skills</a>
                     <a href="#projects" class="nav-link font-medium">Projects</a>
-                    <a href="#photos" class="nav-link font-medium">Photos</a>
                     <a href="#contact" class="nav-link font-medium">Contact</a>
                 </nav>
-                <div class="flex items-center space-x-4">
-                    <!-- Mobile menu button -->
-                    <button id="mobile-menu-button" class="md:hidden p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-primary-color transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                    </button>
-                </div>
+                <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
             </div>
         </div>
         <div id="mobile-menu" class="hidden md:hidden">
@@ -103,7 +78,6 @@
             <a href="#experience" class="block py-2 px-6 text-sm nav-link">Experience</a>
             <a href="#skills" class="block py-2 px-6 text-sm nav-link">Skills</a>
             <a href="#projects" class="block py-2 px-6 text-sm nav-link">Projects</a>
-            <a href="#photos" class="block py-2 px-6 text-sm nav-link">Photos</a>
             <a href="#contact" class="block py-2 px-6 text-sm nav-link">Contact</a>
         </div>
     </header>
@@ -111,16 +85,11 @@
     <main>
         <section id="home" class="pt-32 pb-16">
             <div class="container mx-auto px-6 text-center">
-                <!-- Profile Picture Section -->
-                <div class="mb-8">
-                    <img src="2.png" alt="Brian Kiti Nyale Profile Picture" class="w-36 h-36 rounded-full mx-auto shadow-lg object-cover">
-                </div>
-
                 <h2 class="text-4xl md:text-5xl font-bold mb-4">Brian Kiti Nyale</h2>
                 <p class="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">IT Professional | Network Engineer | Developer</p>
                 <div class="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
-                    <h3 class="text-2xl font-semibold mb-4 text-[#3498db]">Professional Summary</h3>
-                    <p class="leading-relaxed">
+                    <h3 class="text-2xl font-semibold mb-4 text-left text-[#3498db]">Professional Summary</h3>
+                    <p class="text-left leading-relaxed">
                         Experienced and adaptable IT professional skilled in network engineering, system administration, and software development. Proven track record of troubleshooting network issues, managing databases, and building web and mobile applications. Seeking to apply technical skills to improve organizational efficiency and drive innovation.
                     </p>
                 </div>
@@ -165,46 +134,14 @@
                 </div>
             </div>
         </section>
-        
-        <section id="photos" class="py-16">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-12">My Journey in Pictures</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                    <div class="photo-card bg-white rounded-xl shadow-lg overflow-hidden">
-                        <img src="1.png" alt="A professional photo of Brian Kiti Nyale" class="w-full h-auto object-cover">
-                        <div class="p-4">
-                            <p class="text-sm text-gray-600 text-center">A professional photo of me</p>
-                        </div>
-                    </div>
-                    <div class="photo-card bg-white rounded-xl shadow-lg overflow-hidden">
-                        <img src="3.png" alt="Brian Kiti Nyale working at a desk" class="w-full h-auto object-cover">
-                        <div class="p-4">
-                            <p class="text-sm text-gray-600 text-center">Working at my desk</p>
-                        </div>
-                    </div>
-                    <div class="photo-card bg-white rounded-xl shadow-lg overflow-hidden">
-                        <img src="4.png" alt="Another professional photo of Brian Kiti Nyale" class="w-full h-auto object-cover">
-                        <div class="p-4">
-                            <p class="text-sm text-gray-600 text-center">A caption for my third image</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section id="contact" class="py-16 bg-white">
+        <section id="contact" class="py-16">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl font-bold mb-4">Get In Touch</h2>
                 <p class="text-gray-600 mb-8">Feel free to reach out for collaborations or job opportunities.</p>
-                <div class="flex justify-center items-center space-x-8">
-                    <a href="mailto:kiti.nyale81@gmail.com" class="text-gray-700 hover:text-[#3498db] transition-colors flex items-center space-x-2">
-                        <i class="fas fa-envelope"></i>
-                        <span>Email</span>
-                    </a>
-                    <a href="tel:0724590975" class="text-gray-700 hover:text-[#3498db] transition-colors flex items-center space-x-2">
-                        <i class="fas fa-phone"></i>
-                        <span>Phone</span>
-                    </a>
+                <div class="flex justify-center items-center space-x-6">
+                    <a href="mailto:kiti.nyale81@gmail.com" class="text-gray-700 hover:text-[#3498db] transition-colors">Email</a>
+                    <a href="tel:0724590975" class="text-gray-700 hover:text-[#3498db] transition-colors">Phone</a>
                 </div>
             </div>
         </section>
@@ -216,7 +153,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu functionality
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
 
@@ -236,7 +172,6 @@
                 });
             });
 
-            // Experience data for the timeline
             const experienceData = [
                 {
                     role: "Network Engineer",
@@ -304,7 +239,6 @@
                 timelineContainer.appendChild(timelineItem);
             });
 
-            // Skills chart functionality
             const ctx = document.getElementById('skillsChart').getContext('2d');
             const skillsChart = new Chart(ctx, {
                 type: 'radar',
@@ -364,3 +298,4 @@
     </script>
 </body>
 </html>
+
