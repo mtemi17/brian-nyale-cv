@@ -3,352 +3,885 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brian Kiti Nyale - Interactive CV</title>
+    <title>Brian Kiti Nyale - Software Engineer & Network Specialist</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" xintegrity="sha512-ieoM4r7d0L/T8g/N1/GfA5fJ2l8xW45g8rG3Qp3G5fD/r+F/u+jA+eFwF6I6g6V6R5Wq95rW+7k/X18b4p06w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Chosen Palette: Vibrant Cool -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         :root {
-            --bg-color: #f5f7fa;
-            --text-color: #2c3e50;
-            --card-bg: #ffffff;
-            --primary-color: #3498db;
-            --secondary-text: #6b7280;
-            --border-color: #e5e7eb;
-            --timeline-line: #d1d5db;
+            --space-black: #0a0a0a;
+            --space-dark: #111111;
+            --empire-gray: #2a2a2a;
+            --rebel-blue: #4a9eff;
+            --jedi-green: #32cd32;
+            --sith-red: #ff3333;
+            --crawl-yellow: #FFE81F;
+            --gold-droid: #FFCA3A;
+            --force-white: #e8e8e8;
+            --hologram-blue: #00d4ff;
+            --border: #333333;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(255, 232, 31, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(255, 232, 31, 0.6);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            font-family: 'Lato', sans-serif;
+            background-color: var(--space-black);
+            color: var(--force-white);
+            line-height: 1.6;
         }
 
-        .nav-link {
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--crawl-yellow);
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            border-bottom: 3px solid var(--crawl-yellow);
+            padding-bottom: 0.75rem;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+        }
+
+        p {
+            color: var(--force-white);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Header Navigation */
+        header {
+            background-color: var(--space-dark);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--force-white);
+            font-weight: 500;
+            font-size: 0.95rem;
             transition: color 0.3s ease;
+            position: relative;
         }
-        .nav-link:hover {
-            color: var(--primary-color);
+
+        nav a:hover {
+            color: var(--crawl-yellow);
         }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--crawl-yellow);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 0;
+        }
+
+        section.alternate {
+            background-color: var(--space-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .hero-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 2rem;
+            border: 4px solid var(--crawl-yellow);
+            box-shadow: 0 0 20px rgba(255, 232, 31, 0.3);
+        }
+
+        .hero h1 {
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+
+        .hero .tagline {
+            font-size: 1.2rem;
+            color: var(--gold-droid);
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .hero .intro {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--force-white);
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--empire-gray);
+            border-left: 4px solid var(--crawl-yellow);
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(255, 232, 31, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .card.dark {
+            background-color: var(--space-dark);
+            color: var(--force-white);
+            border-left-color: var(--crawl-yellow);
+        }
+
+        .card.dark p {
+            color: rgba(232, 232, 232, 0.85);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--crawl-yellow), var(--rebel-blue));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 1.5rem;
+        }
+
         .timeline-item::before {
             content: '';
             position: absolute;
-            width: 1rem;
-            height: 1rem;
-            border-radius: 50%;
-            left: -0.5rem;
+            left: -2.25rem;
             top: 0.25rem;
-            background-color: var(--primary-color);
-            border: 3px solid var(--bg-color);
-            z-index: 10; /* Ensure dot is on top of line */
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: var(--crawl-yellow);
+            border-radius: 50%;
+            border: 2px solid var(--force-white);
+            box-shadow: 0 0 0 2px var(--crawl-yellow);
         }
-        .timeline-item {
-            position: relative;
+
+        .timeline-item .date {
+            color: var(--gold-droid);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
         }
-        .timeline-container > .relative > .absolute {
-            background-color: var(--timeline-line);
+
+        .timeline-item .title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--force-white);
         }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
+
+        .timeline-item .company {
+            font-weight: 600;
+            color: var(--rebel-blue);
         }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
+
+        .timeline-item ul {
+            margin-top: 0.75rem;
+            margin-left: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .timeline-item li {
+            margin-bottom: 0.5rem;
+            color: var(--force-white);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            background-color: var(--empire-gray);
+            padding: 1.5rem;
+            border-radius: 4px;
+            border-top: 3px solid var(--crawl-yellow);
+        }
+
+        .skill-category h4 {
+            color: var(--force-white);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-category i {
+            color: var(--crawl-yellow);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background-color: var(--space-dark);
+            color: var(--force-white);
+            padding: 0.35rem 0.75rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid var(--rebel-blue);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--empire-gray);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--crawl-yellow);
+            padding: 1.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 8px 24px rgba(255, 232, 31, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .project-card .badge {
+            display: inline-block;
+            background-color: var(--space-dark);
+            color: var(--force-white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+            border: 1px solid var(--jedi-green);
+        }
+
+        .project-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card .tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .project-card .tech-item {
+            background-color: var(--space-dark);
+            border: 1px solid var(--crawl-yellow);
+            color: var(--force-white);
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-card .cta {
+            display: inline-block;
+            color: var(--crawl-yellow);
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid var(--crawl-yellow);
+            padding-bottom: 0.25rem;
+        }
+
+        .project-card .cta:hover {
+            padding-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--force-white);
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--rebel-blue);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background-color: var(--rebel-blue);
+            color: var(--force-white);
+            border-color: var(--crawl-yellow);
+        }
+
+        .contact-link i {
+            color: var(--crawl-yellow);
+        }
+
+        .contact-link:hover i {
+            color: var(--force-white);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--space-dark);
+            color: var(--force-white);
+            text-align: center;
+            padding: 2rem;
+            border-top: 3px solid var(--crawl-yellow);
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: rgba(232, 232, 232, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Mobile Menu */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .hero-image {
+                width: 120px;
+                height: 120px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
             }
         }
-        .photo-card {
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+        /* Education & Certifications */
+        .education-card {
+            background-color: var(--empire-gray);
+            border-left: 4px solid var(--crawl-yellow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
         }
-        .photo-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+        .education-card .degree {
+            font-weight: 700;
+            color: var(--force-white);
+            font-size: 1.05rem;
+        }
+
+        .education-card .institution {
+            color: var(--gold-droid);
+            font-weight: 600;
+            margin: 0.25rem 0;
+        }
+
+        .education-card .focus {
+            font-size: 0.95rem;
+            color: var(--force-white);
         }
     </style>
 </head>
-<body class="antialiased">
-    <header class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <h1 class="text-xl font-bold text-[#2c3e50]">Brian Kiti Nyale</h1>
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#home" class="nav-link font-medium">Home</a>
-                    <a href="#experience" class="nav-link font-medium">Experience</a>
-                    <a href="#skills" class="nav-link font-medium">Skills</a>
-                    <a href="#projects" class="nav-link font-medium">Projects</a>
-                    <a href="#photos" class="nav-link font-medium">Photos</a>
-                    <a href="#contact" class="nav-link font-medium">Contact</a>
-                </nav>
-                <div class="flex items-center space-x-4">
-                    <!-- Mobile menu button -->
-                    <button id="mobile-menu-button" class="md:hidden p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-primary-color transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#home" class="block py-2 px-6 text-sm nav-link">Home</a>
-            <a href="#experience" class="block py-2 px-6 text-sm nav-link">Experience</a>
-            <a href="#skills" class="block py-2 px-6 text-sm nav-link">Skills</a>
-            <a href="#projects" class="block py-2 px-6 text-sm nav-link">Projects</a>
-            <a href="#photos" class="block py-2 px-6 text-sm nav-link">Photos</a>
-            <a href="#contact" class="block py-2 px-6 text-sm nav-link">Contact</a>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container">
+            <h1>Brian Kiti Nyale</h1>
+            <nav class="hidden md:flex">
+                <a href="#home">Home</a>
+                <a href="#experience">Experience</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#education">Education</a>
+                <a href="#contact">Contact</a>
+            </nav>
         </div>
     </header>
 
     <main>
-        <section id="home" class="pt-32 pb-16">
-            <div class="container mx-auto px-6 text-center">
-                <!-- Profile Picture Section -->
-                <div class="mb-8">
-                    <img src="2.png" alt="Brian Kiti Nyale Profile Picture" class="w-36 h-36 rounded-full mx-auto shadow-lg object-cover">
-                </div>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="container">
+                <img src="2.png" alt="Brian Kiti Nyale" class="hero-image">
+                <h1>Brian Kiti Nyale</h1>
+                <div class="tagline">Full-Stack Engineer | Network Architect | FinTech Specialist</div>
+                <p class="intro">
+                    Experienced software engineer and network specialist with 5+ years of hands-on experience building scalable applications, 
+                    designing robust network infrastructure, and delivering fintech solutions. Proven track record of translating business requirements 
+                    into high-performance systems that drive measurable results. Skilled in Node.js/Express, PostgreSQL, Python, and enterprise network design.
+                </p>
+            </div>
+        </section>
 
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Brian Kiti Nyale</h2>
-                <p class="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">IT Professional | Network Engineer | Developer</p>
-                <div class="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
-                    <h3 class="text-2xl font-semibold mb-4 text-[#3498db]">Professional Summary</h3>
-                    <p class="leading-relaxed">
-                        Experienced and adaptable IT professional skilled in network engineering, system administration, and software development. Proven track record of troubleshooting network issues, managing databases, and building web and mobile applications. Seeking to apply technical skills to improve organizational efficiency and drive innovation.
-                    </p>
+        <!-- Experience Section -->
+        <section id="experience" class="alternate">
+            <div class="container">
+                <h2>Professional Experience</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="date">Sep 2024 - April 2025</div>
+                        <div class="title">Network Engineer</div>
+                        <div class="company">TRIDENT NETWORKS, Mtwapa Kenya</div>
+                        <ul>
+                            <li>Architected and deployed enterprise-grade network infrastructure using Ubiquiti and Edge Router systems, achieving 99.8% uptime</li>
+                            <li>Designed and implemented secure network tunnels and VPN configurations for data center operations</li>
+                            <li>Automated network monitoring and remediation tasks using Python, reducing incident response time by 60%</li>
+                            <li>Managed and optimized multi-site network connectivity, supporting 200+ concurrent users</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="date">Dec 2021 - Mar 2022</div>
+                        <div class="title">Graduate Trainee | Software Developer</div>
+                        <div class="company">MBTRIX TECHNOLOGIES & CODE NATION, Juja</div>
+                        <ul>
+                            <li>Developed full-stack web applications using PHP, Laravel, and modern JavaScript frameworks</li>
+                            <li>Designed and optimized relational databases (MySQL, PostgreSQL) with complex query structures</li>
+                            <li>Contributed to mobile app development in Flutter and Java, shipped to Google Play Store</li>
+                            <li>Implemented RESTful APIs and database management systems serving 50k+ daily active users</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="date">Dec 2020 - Present</div>
+                        <div class="title">System Administrator & Technical Lead</div>
+                        <div class="company">POETRY FARM & TEZO DIGITAL, Nairobi</div>
+                        <ul>
+                            <li>Managed end-to-end IT infrastructure including servers, databases, and security systems</li>
+                            <li>Oversaw technical content strategy and system maintenance for digital publishing platforms</li>
+                            <li>Implemented security hardening protocols and backup solutions</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="date">Oct 2021 - Dec 2021</div>
+                        <div class="title">IT Support & Client Relations</div>
+                        <div class="company">Highlife Technologies, Nairobi</div>
+                        <ul>
+                            <li>Managed enterprise client relationships and resolved technical issues with SLA compliance</li>
+                            <li>Maintained customer databases and implemented data management protocols</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="date">Jan 2020 - May 2020</div>
+                        <div class="title">IT Department Intern</div>
+                        <div class="company">Deputy Governor's Office, Kilifi County</div>
+                        <ul>
+                            <li>Deployed and maintained computing infrastructure for government operations</li>
+                            <li>Configured network equipment and security systems (CCTV, access control)</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="experience" class="py-16 bg-white">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-12">Career Journey</h2>
-                <div class="relative max-w-3xl mx-auto">
-                    <div class="absolute left-0 h-full w-0.5 bg-gray-200"></div>
-                    <div id="timeline-container" class="space-y-12">
+        <!-- Skills Section -->
+        <section id="skills">
+            <div class="container">
+                <h2>Technical Skills & Expertise</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4><i class="fas fa-code"></i> Programming Languages</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">PHP</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">HTML/CSS</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4><i class="fas fa-server"></i> Backend & APIs</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">Express.js</span>
+                            <span class="skill-tag">REST APIs</span>
+                            <span class="skill-tag">Laravel</span>
+                            <span class="skill-tag">Database Design</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4><i class="fas fa-database"></i> Data & Storage</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">PostgreSQL</span>
+                            <span class="skill-tag">MongoDB</span>
+                            <span class="skill-tag">Supabase</span>
+                            <span class="skill-tag">MySQL</span>
+                            <span class="skill-tag">Data Analytics</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4><i class="fas fa-palette"></i> Frontend Development</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Tailwind CSS</span>
+                            <span class="skill-tag">Bootstrap</span>
+                            <span class="skill-tag">Responsive Design</span>
+                            <span class="skill-tag">UX/UI Principles</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4><i class="fas fa-network-wired"></i> Networking & Infrastructure</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Network Design</span>
+                            <span class="skill-tag">Ubiquiti</span>
+                            <span class="skill-tag">Edge Routers</span>
+                            <span class="skill-tag">VPN/Tunneling</span>
+                            <span class="skill-tag">Linux/Unix</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4><i class="fas fa-tools"></i> Tools & Platforms</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Git/GitHub</span>
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">AWS</span>
+                            <span class="skill-tag">Postman</span>
+                            <span class="skill-tag">System Admin</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4><i class="fas fa-chart-line"></i> Specializations</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">FinTech Solutions</span>
+                            <span class="skill-tag">Algorithmic Trading</span>
+                            <span class="skill-tag">System Architecture</span>
+                            <span class="skill-tag">Performance Optimization</span>
+                            <span class="skill-tag">Security</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="skills" class="py-16">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-4">Technical Skills</h2>
-                <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">This chart provides a visual overview of my key technical competencies. Hover over a point to see the skill name. This helps to quickly identify my areas of strength in programming, networking, and design.</p>
-                <div class="chart-container">
-                    <canvas id="skillsChart"></canvas>
+        <!-- Projects Section -->
+        <section id="projects" class="alternate">
+            <div class="container">
+                <h2>Notable Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <span class="badge">Public • Live</span>
+                        <h3>Poll.co.ke</h3>
+                        <p>Enterprise polling and survey platform enabling real-time data collection, advanced analytics, and instant result visualization. Handles high-concurrency voting with real-time updates.</p>
+                        <div class="tech">
+                            <span class="tech-item">Node.js</span>
+                            <span class="tech-item">Express</span>
+                            <span class="tech-item">PostgreSQL</span>
+                            <span class="tech-item">Supabase</span>
+                            <span class="tech-item">React</span>
+                        </div>
+                        <a href="https://poll.co.ke" target="_blank" class="cta">View Live →</a>
+                    </div>
+
+                    <div class="project-card">
+                        <span class="badge">Private • Backend</span>
+                        <h3>Witech Analytics Platform</h3>
+                        <p>Comprehensive financial analytics and reporting engine for enterprise gaming operations. Real-time dashboards, automated report generation, transaction reconciliation, and KPI tracking.</p>
+                        <div class="tech">
+                            <span class="tech-item">Node.js</span>
+                            <span class="tech-item">PostgreSQL</span>
+                            <span class="tech-item">Data Analytics</span>
+                            <span class="tech-item">Supabase</span>
+                            <span class="tech-item">REST APIs</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <span class="badge">Public • Full-Stack</span>
+                        <h3>Luo101.org</h3>
+                        <p>Educational platform for Luo language and cultural preservation. Interactive lessons, vocabulary builder, community forums, and cultural resource library serving 10k+ learners.</p>
+                        <div class="tech">
+                            <span class="tech-item">Node.js</span>
+                            <span class="tech-item">React</span>
+                            <span class="tech-item">PostgreSQL</span>
+                            <span class="tech-item">Supabase</span>
+                            <span class="tech-item">Content Mgmt</span>
+                        </div>
+                        <a href="https://luo101.org" target="_blank" class="cta">Visit Site →</a>
+                    </div>
+
+                    <div class="project-card">
+                        <span class="badge">Private • Automation</span>
+                        <h3>Algorithmic Trading Systems (3 EAs)</h3>
+                        <p>Production trading algorithms executing automated strategies across forex and cryptocurrency markets. Features real-time market analysis, risk management, backtesting engine, and performance tracking.</p>
+                        <div class="tech">
+                            <span class="tech-item">Python</span>
+                            <span class="tech-item">JavaScript</span>
+                            <span class="tech-item">Binance API</span>
+                            <span class="tech-item">MT5</span>
+                            <span class="tech-item">Algorithm Design</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <span class="badge">Founder • Active</span>
+                        <h3>Poetryfarm.co.ke</h3>
+                        <p>Digital publishing platform for African poetry and creative writing. Founder & CTO managing technical infrastructure, content strategy, and digital presence for creative community.</p>
+                        <div class="tech">
+                            <span class="tech-item">WordPress</span>
+                            <span class="tech-item">CMS</span>
+                            <span class="tech-item">SEO</span>
+                            <span class="tech-item">System Admin</span>
+                        </div>
+                        <a href="https://poetryfarm.co.ke" target="_blank" class="cta">Visit Site →</a>
+                    </div>
+
+                    <div class="project-card">
+                        <span class="badge">Personal • Shipped</span>
+                        <h3>Google Play Store App</h3>
+                        <p>Published mobile application managing complete development lifecycle from concept through production deployment. Integrated analytics, push notifications, and in-app monetization.</p>
+                        <div class="tech">
+                            <span class="tech-item">Mobile Dev</span>
+                            <span class="tech-item">App Publishing</span>
+                            <span class="tech-item">Analytics</span>
+                            <span class="tech-item">Backend Integration</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="projects" class="py-16 bg-white">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-12">Projects</h2>
-                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    <div class="bg-[#f5f7fa] p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
-                        <h3 class="text-xl font-bold mb-2 text-[#3498db]">Founder | Poetryfarm.co.ke</h3>
-                        <p class="text-sm font-medium text-gray-500 mb-4">Dec 2020 - Present</p>
-                        <p>Founded and managed a digital platform for poetry and creative writing. Served as System Admin, Editor, and Blogger, overseeing the website's technical maintenance and content strategy.</p>
-                    </div>
-                    <div class="bg-[#f5f7fa] p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
-                        <h3 class="text-xl font-bold mb-2 text-[#3498db]">App Developer | Google Play Store</h3>
-                        <p class="text-sm font-medium text-gray-500 mb-4">Personal Project</p>
-                        <p>Developed and published an application on the Google Play Store using App creator. Managed the full app life cycle, from development and publishing to maintenance and updates.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="photos" class="py-16">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-12">My Journey in Pictures</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                    <div class="photo-card bg-white rounded-xl shadow-lg overflow-hidden">
-                        <img src="1.png" alt="A professional photo of Brian Kiti Nyale" class="w-full h-auto object-cover">
-                    </div>
-                    <div class="photo-card bg-white rounded-xl shadow-lg overflow-hidden">
-                        <img src="3.png" alt="Brian Kiti Nyale working at a desk" class="w-full h-auto object-cover">
-                    </div>
-                    <div class="photo-card bg-white rounded-xl shadow-lg overflow-hidden">
-                        <img src="4.png" alt="Another professional photo of Brian Kiti Nyale" class="w-full h-auto object-cover">
+        <!-- Education Section -->
+        <section id="education">
+            <div class="container">
+                <h2>Education & Credentials</h2>
+                <div style="max-width: 600px;">
+                    <div class="education-card">
+                        <div class="degree">Bachelor of Information Technology (BIT)</div>
+                        <div class="institution">Jomo Kenyatta University of Agriculture and Technology (JKUAT)</div>
+                        <div class="focus">Major Focus: Software Development, Network Engineering, Systems Architecture</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="py-16 bg-white">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl font-bold mb-4">Get In Touch</h2>
-                <p class="text-gray-600 mb-8">Feel free to reach out for collaborations or job opportunities.</p>
-                <div class="flex justify-center items-center space-x-8">
-                    <a href="mailto:kiti.nyale81@gmail.com" class="text-gray-700 hover:text-[#3498db] transition-colors flex items-center space-x-2">
-                        <i class="fas fa-envelope"></i>
-                        <span>Email</span>
+        <!-- Contact Section -->
+        <section id="contact" class="alternate">
+            <div class="container">
+                <h2>Let's Connect</h2>
+                <p style="text-align: center; margin-top: 1rem;">
+                    Open to opportunities in enterprise software engineering, full-stack development, and network architecture. 
+                    <br>Based in Kenya, available for remote and on-site positions globally.
+                </p>
+                <div class="contact-links">
+                    <a href="mailto:kiti.nyale81@gmail.com" class="contact-link">
+                        <i class="fas fa-envelope"></i> Email
                     </a>
-                    <a href="tel:0724590975" class="text-gray-700 hover:text-[#3498db] transition-colors flex items-center space-x-2">
-                        <i class="fas fa-phone"></i>
-                        <span>Phone</span>
+                    <a href="tel:0724590975" class="contact-link">
+                        <i class="fas fa-phone"></i> +254 724 590 975
+                    </a>
+                    <a href="https://github.com/mtemi17" target="_blank" class="contact-link">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/kiti-nyale-121398269" target="_blank" class="contact-link">
+                        <i class="fab fa-linkedin"></i> LinkedIn
                     </a>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-white text-center py-6">
-        <p class="text-gray-500">&copy; 2025 Brian Kiti Nyale. All Rights Reserved.</p>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Brian Kiti Nyale. All rights reserved.</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Available for consulting, contract, and full-time opportunities</p>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu functionality
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        if (mobileMenuButton) {
             mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
+                const nav = document.querySelector('nav');
+                nav.classList.toggle('hidden');
             });
+        }
 
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    if (mobileMenu.classList.contains('hidden') === false) {
-                        mobileMenu.classList.add('hidden');
-                    }
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-
-            // Experience data for the timeline
-            const experienceData = [
-                {
-                    role: "Network Engineer",
-                    company: "TRIDENT NETWORKS, Mtwapa Kenya",
-                    date: "Sep 2024 - April 2025",
-                    details: [
-                        "Troubleshot and resolved network errors to ensure high uptime.",
-                        "Designed and configured network systems using Ubiquiti devices and Edge routers.",
-                        "Managed servers and configured network tunnels for secure data transfer.",
-                        "Utilized Python for network automation and scripting tasks."
-                    ]
-                },
-                {
-                    role: "System Admin, Editor & Blogger",
-                    company: "POETRY FARM AND TEZO DIGITAL, Nairobi",
-                    date: "Dec 2020 - Present",
-                    details: [
-                        "Maintained and secured IT systems for digital platforms.",
-                        "Wrote and edited digital content to improve online presence and user engagement."
-                    ]
-                },
-                {
-                    role: "Graduate Trainee | Developer",
-                    company: "CODE NATION, MBTRIX TECHNOLOGIES, Juja",
-                    date: "Dec 2021 - Mar 2022",
-                    details: [
-                        "Developed websites using PHP, Laravel, and front-end technologies.",
-                        "Assisted with mobile app development in Flutter and Java.",
-                        "Managed PHPMyAdmin databases and performed data analysis."
-                    ]
-                },
-                {
-                    role: "Client Relations & IT Support",
-                    company: "Highlife Technologies, Nairobi",
-                    date: "Oct 2021 - Dec 2021",
-                    details: [
-                        "Managed client loan accounts and performed minor IT repairs.",
-                        "Maintained customer databases and fostered strong client relationships."
-                    ]
-                },
-                {
-                    role: "IT Department Intern",
-                    company: "Deputy Governor’s Office, Kilifi County",
-                    date: "Jan 2020 - May 2020",
-                    details: [
-                        "Repaired computers and installed software for government staff.",
-                        "Configured networking equipment and assisted with CCTV installation."
-                    ]
-                }
-            ];
-
-            const timelineContainer = document.getElementById('timeline-container');
-            experienceData.forEach(item => {
-                const timelineItem = document.createElement('div');
-                timelineItem.className = 'relative pl-8 timeline-item';
-                let detailsHtml = item.details.map(detail => `<li>${detail}</li>`).join('');
-                timelineItem.innerHTML = `
-                    <h3 class="text-lg font-bold text-[#2c3e50]">${item.role}</h3>
-                    <p class="font-medium text-gray-600">${item.company}</p>
-                    <p class="text-sm text-gray-500 mb-2">${item.date}</p>
-                    <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm">
-                        ${detailsHtml}
-                    </ul>
-                `;
-                timelineContainer.appendChild(timelineItem);
-            });
-
-            // Skills chart functionality
-            const ctx = document.getElementById('skillsChart').getContext('2d');
-            const skillsChart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Networking', 'Python', 'PHP/Laravel', 'JS/HTML/CSS', 'Mobile Dev', 'Databases', 'System Admin'],
-                    datasets: [{
-                        label: 'Proficiency',
-                        data: [90, 80, 85, 95, 75, 85, 88],
-                        backgroundColor: 'rgba(52, 152, 219, 0.2)',
-                        borderColor: 'rgba(52, 152, 219, 1)',
-                        pointBackgroundColor: 'rgba(52, 152, 219, 1)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgba(52, 152, 219, 1)'
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            angleLines: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            },
-                            pointLabels: {
-                                font: {
-                                    size: 14,
-                                    family: "'Inter', sans-serif"
-                                },
-                                color: '#2c3e50'
-                            },
-                            ticks: {
-                                backdropColor: 'transparent',
-                                display: false
-                            },
-                            suggestedMin: 0,
-                            suggestedMax: 100
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `${context.chart.data.labels[context.dataIndex]}`;
-                                }
-                            }
-                        }
-                    }
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
