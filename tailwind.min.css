@@ -1,0 +1,5 @@
+/* Minimal Tailwind CSS - only utilities used in this project */
+.hidden { display: none; }
+@media (min-width: 768px) {
+  .md\:flex { display: flex; }
+}
